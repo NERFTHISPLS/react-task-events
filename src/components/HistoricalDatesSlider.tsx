@@ -7,7 +7,7 @@ import {
   SWIPER_ITEMS_PER_VIEW,
   SWIPER_SPACE_BETWEEN_ITEMS,
 } from '@/utils/constants';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import 'swiper/css';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -37,6 +37,13 @@ function HistoricalDatesSlider() {
   const { currentHistoryInterval } = useHistoryIntervalContext();
   const [isBeginning, setIsBeginning] = useState(true);
   const [isEnd, setIsEnd] = useState(false);
+
+  useEffect(() => {
+    if (swiperRef.current) {
+      setIsBeginning(swiperRef.current.isBeginning);
+      setIsEnd(swiperRef.current.isEnd);
+    }
+  }, [currentHistoryInterval]);
 
   if (!currentHistoryInterval) return null;
 
