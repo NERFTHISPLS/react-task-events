@@ -1,19 +1,41 @@
 import styled from 'styled-components';
+import { Swiper, SwiperSlide } from 'swiper/react';
+
+import 'swiper/css';
 import EventsListItem from './EventsListItem';
 
-const List = styled.ol`
+const Container = styled.ol`
   padding-left: 8rem;
   padding-right: 3.5rem;
-  display: flex;
-  gap: 8rem;
+  cursor: grab;
 `;
 
 function HistoricalDatesSlider() {
   return (
-    <List>
-      <EventsListItem />
-      <EventsListItem />
-    </List>
+    <Container>
+      <Swiper
+        spaceBetween={50}
+        slidesPerView={3}
+        onSlideChange={() => console.log('slide change')}
+        onSwiper={(swiper) => console.log(swiper)}
+      >
+        <SwiperSlide>
+          <EventsListItem />
+        </SwiperSlide>
+
+        <SwiperSlide>
+          <EventsListItem />
+        </SwiperSlide>
+
+        <SwiperSlide>
+          <EventsListItem />
+        </SwiperSlide>
+
+        <SwiperSlide>
+          <EventsListItem />
+        </SwiperSlide>
+      </Swiper>
+    </Container>
   );
 }
 
