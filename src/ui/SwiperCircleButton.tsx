@@ -12,9 +12,11 @@ const Button = styled.button`
   justify-content: center;
   align-items: center;
   background-color: var(--color-white);
-  border: 1px solid var(--color-dark-blue-50);
-  padding: 1.5rem;
+  border: none;
+  padding: 1rem;
   border-radius: 50%;
+  color: var(--color-blue);
+  box-shadow: 0 0 15px var(--color-blue);
 
   transition: all 0.1s;
 
@@ -27,7 +29,7 @@ const Button = styled.button`
   }
 `;
 
-function CircleButton({
+function SwiperCircleButton({
   disabled = false,
   onClick = () => {},
   children,
@@ -39,4 +41,4 @@ function CircleButton({
   );
 }
 
-export default CircleButton;
+export default SwiperCircleButton;

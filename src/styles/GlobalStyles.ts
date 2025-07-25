@@ -6,6 +6,7 @@ const GlobalStyles = createGlobalStyle`
     --color-dark-blue: #42567a;
     --color-iris: #5d5fef;
     --color-dark-blue-10: rgb(66, 86, 122, 0.1);
+    --color-dark-blue-50: rgb(66, 86, 122, 0.5);
     --color-grey: #303e58;
     --color-light-grey: #f4f5f9;
     --color-purple: #ef5da8;
