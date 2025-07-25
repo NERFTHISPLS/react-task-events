@@ -6,7 +6,7 @@ export const Title = styled.h1`
   gap: 7.8rem;
   font-size: 5.6rem;
   font-weight: 700;
-  padding-top: 10rem;
+  padding-top: 5rem;
 
   &::before {
     content: '';

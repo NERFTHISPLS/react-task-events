@@ -1,17 +1,19 @@
+import { TimelineEvent } from '@/types';
 import styled from 'styled-components';
 
 const ListItem = styled.li`
   max-width: 32rem;
 `;
 
-function EventsListItem() {
+interface Props {
+  event: TimelineEvent;
+}
+
+function EventsListItem({ event }: Props) {
   return (
     <ListItem>
-      <h3>2015</h3>
-      <span>
-        13 сентября — частное солнечное затмение, видимое в Южной Африке и части
-        Антарктиды
-      </span>
+      <h3>{event.year}</h3>
+      <span>{event.text}</span>
     </ListItem>
   );
 }
