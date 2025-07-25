@@ -3,6 +3,10 @@ import ChevronRight from '@/ui/ChevronRight';
 import CircleButton from '@/ui/CircleButton';
 import styled from 'styled-components';
 
+const Container = styled.div`
+  align-self: center;
+`;
+
 const Row = styled.div`
   display: flex;
   align-items: center;
@@ -17,7 +21,7 @@ const Span = styled.span`
 
 function ChangeDatesButtons() {
   return (
-    <div>
+    <Container>
       <Span>01/06</Span>
 
       <Row>
@@ -29,7 +33,7 @@ function ChangeDatesButtons() {
           <ChevronRight size={20} />
         </CircleButton>
       </Row>
-    </div>
+    </Container>
   );
 }
 
