@@ -1,4 +1,5 @@
-import { TimelineEvent } from '@/types';
+import { useHistoryIntervalContext } from '@/contexts/history/useHistoryIntervalContext';
+import { HistoryEvent } from '@/types';
 import {
   SWIPER_ITEMS_PER_VIEW,
   SWIPER_SPACE_BETWEEN_ITEMS,
@@ -8,12 +9,8 @@ import 'swiper/css';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import EventsListItem from './EventsListItem';
 
-interface Props {
-  events: TimelineEvent[];
-}
-
 interface ContainerProps {
-  $events: TimelineEvent[];
+  $events: HistoryEvent[];
 }
 
 const Container = styled.ol<ContainerProps>`
@@ -24,7 +21,13 @@ const Container = styled.ol<ContainerProps>`
     props.$events.length > SWIPER_ITEMS_PER_VIEW ? 'grab' : 'auto'};
 `;
 
-function HistoricalDatesSlider({ events }: Props) {
+function HistoricalDatesSlider() {
+  const { currentHistoryInterval } = useHistoryIntervalContext();
+
+  if (!currentHistoryInterval) return null;
+
+  const { events } = currentHistoryInterval;
+
   return (
     <Container $events={events}>
       <Swiper

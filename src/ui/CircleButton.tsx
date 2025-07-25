@@ -2,6 +2,8 @@ import { ReactNode } from 'react';
 import styled from 'styled-components';
 
 interface Props {
+  disabled?: boolean;
+  onClick?: () => void;
   children: ReactNode;
 }
 
@@ -25,8 +27,16 @@ const Button = styled.button`
   }
 `;
 
-function CircleButton({ children }: Props) {
-  return <Button>{children}</Button>;
+function CircleButton({
+  disabled = false,
+  onClick = () => {},
+  children,
+}: Props) {
+  return (
+    <Button disabled={disabled} onClick={onClick}>
+      {children}
+    </Button>
+  );
 }
 
 export default CircleButton;

@@ -1,4 +1,3 @@
-import { timelineData } from '@/data/swiperData';
 import styled from 'styled-components';
 import HistoricalDatesSlider from './HistoricalDatesSlider';
 import HistoricalDatesUpper from './HistoricalDatesUpper';
@@ -26,12 +25,10 @@ const Section = styled.section`
 `;
 
 function HistoricalDates() {
-  const timeline = timelineData[0];
-
   return (
     <Section>
       <HistoricalDatesUpper />
-      <HistoricalDatesSlider events={timeline.events} />
+      <HistoricalDatesSlider />
     </Section>
   );
 }

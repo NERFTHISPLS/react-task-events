@@ -1,8 +1,8 @@
-import { TimelineEvent } from '@/types';
+import { HistoryEvent } from '@/types';
 import styled from 'styled-components';
 
 interface Props {
-  event: TimelineEvent;
+  event: HistoryEvent;
 }
 
 const ListItem = styled.li`

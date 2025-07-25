@@ -1,10 +1,10 @@
-import { TimePeriod } from '@/types';
+import { HistoryInterval } from '@/types';
 
-export const timelineData: TimePeriod[] = [
+export const historyIntervalsData: HistoryInterval[] = [
   {
     category: 'science',
     startYear: 2015,
-    endYear: 2017,
+    endYear: 2018,
     events: [
       {
         id: 'sci1',
@@ -80,7 +80,7 @@ export const timelineData: TimePeriod[] = [
   {
     category: 'politics',
     startYear: 2016,
-    endYear: 2019,
+    endYear: 2020,
     events: [
       {
         id: 'pol1',
