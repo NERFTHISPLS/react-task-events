@@ -1,17 +1,26 @@
+import { HistoryEvent } from '@/types';
 import styled from 'styled-components';
+
+interface Props {
+  event: HistoryEvent;
+}
 
 const ListItem = styled.li`
   max-width: 32rem;
+
+  h3 {
+    margin-bottom: 1rem;
+    font-weight: normal;
+    font-size: 2.5rem;
+    color: var(--color-blue);
+  }
 `;
 
-function EventsListItem() {
+function EventsListItem({ event }: Props) {
   return (
     <ListItem>
-      <h3>2015</h3>
-      <span>
-        13 сентября — частное солнечное затмение, видимое в Южной Африке и части
-        Антарктиды
-      </span>
+      <h3>{event.year}</h3>
+      <span>{event.text}</span>
     </ListItem>
   );
 }

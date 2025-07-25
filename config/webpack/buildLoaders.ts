@@ -1,4 +1,3 @@
-import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import ReactRefreshTypeScript from 'react-refresh-typescript';
 import { ModuleOptions } from 'webpack';
 import { BuildOptions } from './types/types';
@@ -29,23 +28,9 @@ export function buildLoaders(options: BuildOptions): ModuleOptions['rules'] {
     ],
   };
 
-  const cssLoaderWithModules = {
-    loader: 'css-loader',
-    options: {
-      modules: {
-        namedExport: false,
-        localIdentName: isDev ? '[path][name]__[local]' : '[hash:base64:8]',
-      },
-    },
-  };
-
-  const scssLoader = {
-    test: /\.module\.scss$/,
-    use: [
-      isDev ? 'style-loader' : MiniCssExtractPlugin.loader,
-      cssLoaderWithModules,
-      'sass-loader',
-    ],
+  const cssLoader = {
+    test: /\.css$/,
+    use: ['style-loader', 'css-loader'],
   };
 
   const tsLoader = {
@@ -64,5 +49,5 @@ export function buildLoaders(options: BuildOptions): ModuleOptions['rules'] {
     exclude: /node_modules/,
   };
 
-  return [assetLoader, scssLoader, tsLoader, svgLoader];
+  return [assetLoader, cssLoader, tsLoader, svgLoader];
 }

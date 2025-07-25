@@ -1,5 +1,6 @@
+import { useHistoryIntervalContext } from '@/contexts/history/useHistoryIntervalContext';
 import styled from 'styled-components';
-import ChangeDatesButtons from './ChangeDatesButtons';
+import ChangeCategoryButtons from './ChangeCategoryButtons';
 import { Circle } from './Circle';
 import { LargeDates } from './LargeDates';
 import { Title } from './Title';
@@ -14,6 +15,12 @@ const Date = styled.span`
 `;
 
 function HistoricalDatesUpper() {
+  const { currentHistoryInterval } = useHistoryIntervalContext();
+
+  if (!currentHistoryInterval) return null;
+
+  const { startYear, endYear } = currentHistoryInterval;
+
   return (
     <Container>
       <Title>
@@ -21,12 +28,12 @@ function HistoricalDatesUpper() {
       </Title>
 
       <LargeDates>
-        <Date color="var(--color-iris)">2015</Date>
+        <Date color="var(--color-iris)">{startYear}</Date>
         <Circle></Circle>
-        <Date color="var(--color-purple)">2022</Date>
+        <Date color="var(--color-purple)">{endYear}</Date>
       </LargeDates>
 
-      <ChangeDatesButtons />
+      <ChangeCategoryButtons />
     </Container>
   );
 }
