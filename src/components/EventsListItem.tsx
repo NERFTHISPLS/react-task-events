@@ -1,13 +1,20 @@
 import { TimelineEvent } from '@/types';
 import styled from 'styled-components';
 
-const ListItem = styled.li`
-  max-width: 32rem;
-`;
-
 interface Props {
   event: TimelineEvent;
 }
+
+const ListItem = styled.li`
+  max-width: 32rem;
+
+  h3 {
+    margin-bottom: 1rem;
+    font-weight: normal;
+    font-size: 2.5rem;
+    color: var(--color-blue);
+  }
+`;
 
 function EventsListItem({ event }: Props) {
   return (
