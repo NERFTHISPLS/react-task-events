@@ -5,6 +5,7 @@ import styled from 'styled-components';
 
 const Container = styled.div`
   align-self: center;
+  padding-left: 8rem;
 `;
 
 const Row = styled.div`

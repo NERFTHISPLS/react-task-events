@@ -4,7 +4,7 @@ export const Title = styled.h1`
   max-height: 13rem;
   display: flex;
   align-items: center;
-  gap: 4.4rem;
+  gap: 7.8rem;
   font-size: 5.6rem;
   font-weight: 700;
   margin-top: 13rem;

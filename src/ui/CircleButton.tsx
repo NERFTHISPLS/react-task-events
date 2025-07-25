@@ -11,7 +11,7 @@ const Button = styled.button`
   align-items: center;
   background-color: var(--color-white);
   border: 1px solid gray;
-  padding: 2.5rem;
+  padding: 1.5rem;
   border-radius: 50%;
 
   transition: all 0.1s;
