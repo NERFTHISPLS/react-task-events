@@ -27,7 +27,11 @@ const GlobalStyles = createGlobalStyle`
     font-family: "PT Sans", sans-serif;
     color: var(--color-dark-blue);
 
-    min-height: 100vh;
+    height: 100vh;
+  }
+
+  #root {
+    height: 100%;
   }
 
   button {
@@ -50,7 +54,7 @@ const GlobalStyles = createGlobalStyle`
     text-decoration: none;
   }
 
-  ul {
+  ul, ol {
     list-style: none;
   }
 

@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import HistoricalDatesSlider from './HistoricalDatesSlider';
 import HistoricalDatesUpper from './HistoricalDatesUpper';
 
 const Section = styled.section`
@@ -6,8 +7,6 @@ const Section = styled.section`
   height: 100%;
   width: 100%;
   max-width: 1440px;
-  display: grid;
-  grid-template-rows: 3fr 1fr;
   margin: 0 auto;
   border-left: 1px solid var(--color-dark-blue-10);
   border-right: 1px solid var(--color-dark-blue-10);
@@ -29,7 +28,7 @@ function HistoricalDates() {
   return (
     <Section>
       <HistoricalDatesUpper />
-      <span>Down</span>
+      <HistoricalDatesSlider />
     </Section>
   );
 }
