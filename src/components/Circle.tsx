@@ -5,16 +5,10 @@ import {
   calcDotsAngles,
 } from '@/utils/helpers';
 import styled from 'styled-components';
+import { DotButton } from './DotButton';
 
 interface CircleProps {
   $diameter: number;
-}
-
-interface DotButtonsProps {
-  $position: {
-    x: number;
-    y: number;
-  };
 }
 
 const StyledCircle = styled.div<CircleProps>`
@@ -28,19 +22,6 @@ const StyledCircle = styled.div<CircleProps>`
   border-radius: 50%;
 `;
 
-const DotButton = styled.button<DotButtonsProps>`
-  position: absolute;
-  top: ${(props) => `${props.$position.y}px`};
-  left: ${(props) => `${props.$position.x}px`};
-  transform: translate(-50%, -50%);
-  width: 6px;
-  height: 6px;
-  border: none;
-  outline: none;
-  background-color: var(--color-dark-blue);
-  border-radius: 50%;
-`;
-
 export function Circle() {
   const { historyIntervals } = useHistoryIntervalContext();
   const radius = CIRCLE_DIAMETER / 2;
@@ -48,10 +29,11 @@ export function Circle() {
 
   return (
     <StyledCircle $diameter={CIRCLE_DIAMETER}>
-      {angles.map((angle) => (
+      {angles.map((angle, i) => (
         <DotButton
           key={angle}
           $position={calcCircleDotCoordinatesByAngle(angle, radius)}
+          $text={(i + 1).toString()}
         ></DotButton>
       ))}
     </StyledCircle>
