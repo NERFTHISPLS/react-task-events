@@ -78,7 +78,7 @@ export const historyIntervalsData: HistoryInterval[] = [
     ],
   },
   {
-    category: 'politics',
+    category: 'cooking',
     startYear: 2016,
     endYear: 2020,
     events: [

@@ -5,7 +5,8 @@ interface DotButtonsProps {
     x: number;
     y: number;
   };
-  $text: string;
+  $orderNum: string;
+  $labelText: string;
   onClick?: () => void;
 }
 
@@ -36,8 +37,18 @@ export const DotButton = styled.button<DotButtonsProps>`
     background-color: var(--color-white);
 
     &::before {
-      content: '${(props) => props.$text}';
+      content: '${(props) => props.$orderNum}';
       font-size: 2rem;
+    }
+
+    &::after {
+      content: '${(props) => props.$labelText}';
+      position: absolute;
+      left: 7rem;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 2rem;
+      font-weight: 700;
     }
   }
 `;
