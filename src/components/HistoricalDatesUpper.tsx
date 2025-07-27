@@ -1,4 +1,8 @@
 import { useHistoryIntervalContext } from '@/contexts/history/useHistoryIntervalContext';
+import { BASE_ANIMATION_DURATION_SECONDS } from '@/utils/constants';
+import { useGSAP } from '@gsap/react';
+import gsap from 'gsap';
+import { useRef } from 'react';
 import styled from 'styled-components';
 import ChangeCategoryButtons from './ChangeCategoryButtons';
 import { Circle } from './Circle';
@@ -15,7 +19,41 @@ const Date = styled.span`
 `;
 
 function HistoricalDatesUpper() {
+  const startYearRef = useRef<HTMLSpanElement>(null);
+  const endYearRef = useRef<HTMLSpanElement>(null);
   const { currentHistoryInterval } = useHistoryIntervalContext();
+  const prevHistoryInterval = useRef(currentHistoryInterval);
+
+  useGSAP(
+    () => {
+      if (!currentHistoryInterval || !prevHistoryInterval.current) return;
+      if (!startYearRef.current || !endYearRef.current) return;
+
+      const { startYear: oldStartYear, endYear: oldEndYear } =
+        prevHistoryInterval.current;
+
+      const { startYear: newStartYear, endYear: newEndYear } =
+        currentHistoryInterval;
+
+      const updateYear = (
+        yearEl: HTMLSpanElement,
+        startYear: number,
+        endYear: number,
+      ) => {
+        gsap.to(startYearRef.current, {
+          duration: BASE_ANIMATION_DURATION_SECONDS,
+          onUpdate: function () {
+            const year = startYear + (endYear - startYear) * this.progress();
+            yearEl.textContent = Math.trunc(year).toString();
+          },
+        });
+      };
+
+      updateYear(startYearRef.current, oldStartYear, newStartYear);
+      updateYear(endYearRef.current, oldEndYear, newEndYear);
+    },
+    { dependencies: [currentHistoryInterval] },
+  );
 
   if (!currentHistoryInterval) return null;
 
@@ -28,9 +66,15 @@ function HistoricalDatesUpper() {
       </Title>
 
       <LargeDates>
-        <Date color="var(--color-iris)">{startYear}</Date>
+        <Date ref={startYearRef} color="var(--color-iris)">
+          {startYear}
+        </Date>
+
         <Circle></Circle>
-        <Date color="var(--color-purple)">{endYear}</Date>
+
+        <Date ref={endYearRef} color="var(--color-purple)">
+          {endYear}
+        </Date>
       </LargeDates>
 
       <ChangeCategoryButtons />

@@ -5,16 +5,24 @@ export interface HistoryEvent {
 }
 
 export interface HistoryInterval {
-  category: Category;
+  category: CategoryKey;
   startYear: number;
   endYear: number;
   events: HistoryEvent[];
 }
 
-type Category =
+export type CategoryKey =
   | 'science'
   | 'technology'
   | 'culture'
-  | 'politics'
+  | 'cooking'
   | 'sports'
   | 'nature';
+
+export type CategoryLabel =
+  | 'Наука'
+  | 'Технологии'
+  | 'Культура'
+  | 'Кулинария'
+  | 'Спорт'
+  | 'Природа';

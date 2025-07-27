@@ -4,9 +4,12 @@ import ChevronLeft from '@/ui/ChevronLeft';
 import ChevronRight from '@/ui/ChevronRight';
 import SwiperCircleButton from '@/ui/SwiperCircleButton';
 import {
+  BASE_ANIMATION_DURATION_SECONDS,
   SWIPER_ITEMS_PER_VIEW,
   SWIPER_SPACE_BETWEEN_ITEMS,
 } from '@/utils/constants';
+import { useGSAP } from '@gsap/react';
+import gsap from 'gsap';
 import { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import 'swiper/css';
@@ -33,6 +36,7 @@ const Container = styled.div`
 `;
 
 function HistoricalDatesSlider() {
+  const containerRef = useRef<HTMLDivElement | null>(null);
   const swiperRef = useRef<SwiperType | null>(null);
   const { currentHistoryInterval } = useHistoryIntervalContext();
   const [isBeginning, setIsBeginning] = useState(true);
@@ -45,12 +49,34 @@ function HistoricalDatesSlider() {
     }
   }, [currentHistoryInterval]);
 
+  useGSAP(
+    () => {
+      if (!containerRef.current) return;
+
+      gsap.to(containerRef.current, {
+        opacity: 0,
+        duration: BASE_ANIMATION_DURATION_SECONDS,
+        onComplete: () => {
+          gsap.fromTo(
+            containerRef.current,
+            { opacity: 0 },
+            {
+              opacity: 1,
+              duration: BASE_ANIMATION_DURATION_SECONDS,
+            },
+          );
+        },
+      });
+    },
+    { dependencies: [currentHistoryInterval] },
+  );
+
   if (!currentHistoryInterval) return null;
 
   const { events } = currentHistoryInterval;
 
   return (
-    <Container>
+    <Container ref={containerRef}>
       {!isBeginning && (
         <SwiperCircleButton onClick={() => swiperRef.current?.slidePrev()}>
           <ChevronLeft />

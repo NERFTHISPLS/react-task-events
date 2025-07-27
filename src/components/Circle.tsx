@@ -1,10 +1,19 @@
 import { useHistoryIntervalContext } from '@/contexts/history/useHistoryIntervalContext';
-import { CIRCLE_DIAMETER } from '@/utils/constants';
+import {
+  BASE_ANGLE,
+  BASE_ANIMATION_DURATION_SECONDS,
+  CATEGORY_TYPE_TO_LABEL,
+  CIRCLE_DIAMETER,
+} from '@/utils/constants';
 import {
   calcCircleDotCoordinatesByAngle,
   calcDotsAngles,
   findHistoryIntervalIndexByCategory,
+  radiansToDegrees,
 } from '@/utils/helpers';
+import { useGSAP } from '@gsap/react';
+import gsap from 'gsap';
+import { useRef, useState } from 'react';
 import styled from 'styled-components';
 import { DotButton } from './DotButton';
 
@@ -17,8 +26,7 @@ const StyledCircle = styled.div<CircleProps>`
   position: absolute;
   left: 50%;
   top: 50%;
-  transform: translate(-50%, -50%)
-    rotate(${(props) => `${props.$rotationAngle}rad`});
+  transform: translate(-50%, -50%);
   height: ${(props) => `${props.$diameter}px`};
   width: ${(props) => `${props.$diameter}px`};
   border: 1px solid var(--color-dark-blue-10);
@@ -26,6 +34,9 @@ const StyledCircle = styled.div<CircleProps>`
 `;
 
 export function Circle() {
+  const circleRef = useRef<HTMLDivElement>(null);
+  const [animationEnded, setAnimationEnded] = useState(false);
+
   const {
     historyIntervals,
     currentHistoryInterval,
@@ -40,19 +51,55 @@ export function Circle() {
     historyIntervals,
   );
 
-  const targetActiveAngleIndex = 1;
-  const rotationAngle =
-    angles[targetActiveAngleIndex] - angles[currentHistoryIntervalIndex];
+  const rotationAngle = BASE_ANGLE - angles[currentHistoryIntervalIndex];
+
+  const categoryLabel =
+    CATEGORY_TYPE_TO_LABEL[currentHistoryInterval?.category || 'science'];
+
+  useGSAP(
+    () => {
+      if (!circleRef.current) return;
+
+      setAnimationEnded(false);
+
+      const angle = radiansToDegrees(rotationAngle);
+      const ease = 'power2.inOut';
+
+      gsap.to(circleRef.current, {
+        rotation: -angle,
+        duration: BASE_ANIMATION_DURATION_SECONDS,
+        ease,
+      });
+
+      gsap.to('.btn', {
+        rotation: angle,
+        duration: BASE_ANIMATION_DURATION_SECONDS,
+        ease,
+        onComplete: () => {
+          setAnimationEnded(true);
+        },
+      });
+    },
+    { dependencies: [currentHistoryIntervalIndex] },
+  );
 
   return (
-    <StyledCircle $diameter={CIRCLE_DIAMETER} $rotationAngle={-rotationAngle}>
+    <StyledCircle
+      ref={circleRef}
+      $diameter={CIRCLE_DIAMETER}
+      $rotationAngle={-rotationAngle}
+    >
       {angles.map((angle, i) => (
         <DotButton
           key={angle}
-          className={currentHistoryIntervalIndex === i ? 'active' : ''}
+          className={`btn ${currentHistoryIntervalIndex === i ? 'active' : ''}`}
           $position={calcCircleDotCoordinatesByAngle(angle, radius)}
-          $text={(i + 1).toString()}
-          $rotationAngle={rotationAngle}
+          $orderNum={(i + 1).toString()}
+          $labelText={
+            animationEnded && currentHistoryIntervalIndex === i
+              ? categoryLabel
+              : ''
+          }
           onClick={() => setCurrentHistoryIntervalByIndex(i)}
         ></DotButton>
       ))}
