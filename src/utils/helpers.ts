@@ -18,3 +18,21 @@ export function findHistoryIntervalIndexByCategory(
 
   return index;
 }
+
+export function calcCircleDotCoordinatesByAngle(
+  angle: number,
+  circleRadius: number,
+) {
+  const center = { x: circleRadius, y: circleRadius };
+
+  const x = center.x + circleRadius * Math.cos(angle);
+  const y = center.y - circleRadius * Math.sin(angle);
+
+  return { x, y };
+}
+
+export function calcDotsAngles(dotsNumber: number) {
+  const baseAngle = (2 * Math.PI) / dotsNumber;
+
+  return Array.from({ length: dotsNumber }, (_, i) => i * baseAngle);
+}
