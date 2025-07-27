@@ -1,3 +1,4 @@
+export const BASE_ANIMATION_DURATION_SECONDS = 0.8;
 export const CIRCLE_DIAMETER = 530;
 export const BASE_ANGLE = Math.PI / 3;
 

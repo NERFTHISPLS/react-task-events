@@ -1,5 +1,9 @@
 import { useHistoryIntervalContext } from '@/contexts/history/useHistoryIntervalContext';
-import { BASE_ANGLE, CIRCLE_DIAMETER } from '@/utils/constants';
+import {
+  BASE_ANGLE,
+  BASE_ANIMATION_DURATION_SECONDS,
+  CIRCLE_DIAMETER,
+} from '@/utils/constants';
 import {
   calcCircleDotCoordinatesByAngle,
   calcDotsAngles,
@@ -52,18 +56,17 @@ export function Circle() {
       if (!circleRef.current) return;
 
       const angle = radiansToDegrees(rotationAngle);
-      const duration = 0.8;
       const ease = 'power2.inOut';
 
       gsap.to(circleRef.current, {
         rotation: -angle,
-        duration,
+        duration: BASE_ANIMATION_DURATION_SECONDS,
         ease,
       });
 
       gsap.to('.btn', {
         rotation: angle,
-        duration,
+        duration: BASE_ANIMATION_DURATION_SECONDS,
         ease,
       });
     },
