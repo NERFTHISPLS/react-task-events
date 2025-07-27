@@ -38,4 +38,8 @@ export const DotButton = styled.button<DotButtonsProps>`
       transform: rotate(${(props) => `${props.$rotationAngle}rad`});
     }
   }
+
+  &:hover {
+    transition: all 0.3s ease-out;
+  }
 `;
