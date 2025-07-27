@@ -2,6 +2,7 @@ import { ReactNode } from 'react';
 import styled from 'styled-components';
 
 interface Props {
+  className?: string;
   disabled?: boolean;
   onClick?: () => void;
   children: ReactNode;
@@ -30,12 +31,13 @@ const Button = styled.button`
 `;
 
 function SwiperCircleButton({
+  className = '',
   disabled = false,
   onClick = () => {},
   children,
 }: Props) {
   return (
-    <Button disabled={disabled} onClick={onClick}>
+    <Button className={className} disabled={disabled} onClick={onClick}>
       {children}
     </Button>
   );
