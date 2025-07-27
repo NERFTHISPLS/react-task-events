@@ -4,6 +4,7 @@ import {
   BASE_ANIMATION_DURATION_SECONDS,
   CATEGORY_TYPE_TO_LABEL,
   CIRCLE_DIAMETER,
+  DEVICE,
 } from '@/utils/constants';
 import {
   calcCircleDotCoordinatesByAngle,
@@ -31,6 +32,10 @@ const StyledCircle = styled.div<CircleProps>`
   width: ${(props) => `${props.$diameter}px`};
   border: 1px solid var(--color-dark-blue-10);
   border-radius: 50%;
+
+  @media ${DEVICE.tablet} {
+    display: none;
+  }
 `;
 
 export function Circle() {

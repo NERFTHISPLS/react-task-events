@@ -1,3 +1,4 @@
+import { DEVICE } from '@/utils/constants';
 import styled from 'styled-components';
 
 export const LargeDates = styled.div`
@@ -18,5 +19,26 @@ export const LargeDates = styled.div`
     transform: translateY(-50%);
     width: 100%;
     height: 1px;
+  }
+
+  @media ${DEVICE.laptop} {
+    font-size: 15rem;
+  }
+
+  @media ${DEVICE.tablet} {
+    font-size: 10rem;
+    flex: 1;
+
+    &::before {
+      display: none;
+    }
+  }
+
+  @media ${DEVICE.tabletS} {
+    font-size: 7rem;
+  }
+
+  @media ${DEVICE.mobileL} {
+    font-size: 5rem;
   }
 `;
