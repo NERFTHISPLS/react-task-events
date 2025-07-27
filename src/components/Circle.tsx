@@ -1,5 +1,5 @@
 import { useHistoryIntervalContext } from '@/contexts/history/useHistoryIntervalContext';
-import { CIRCLE_DIAMETER } from '@/utils/constants';
+import { BASE_ANGLE, CIRCLE_DIAMETER } from '@/utils/constants';
 import {
   calcCircleDotCoordinatesByAngle,
   calcDotsAngles,
@@ -21,8 +21,7 @@ const StyledCircle = styled.div<CircleProps>`
   position: absolute;
   left: 50%;
   top: 50%;
-  transform: translate(-50%, -50%)
-    rotate(${(props) => `${props.$rotationAngle}rad`});
+  transform: translate(-50%, -50%);
   height: ${(props) => `${props.$diameter}px`};
   width: ${(props) => `${props.$diameter}px`};
   border: 1px solid var(--color-dark-blue-10);
@@ -46,13 +45,11 @@ export function Circle() {
     historyIntervals,
   );
 
-  const targetActiveAngleIndex = 1;
-  const rotationAngle =
-    angles[targetActiveAngleIndex] - angles[currentHistoryIntervalIndex];
+  const rotationAngle = BASE_ANGLE - angles[currentHistoryIntervalIndex];
 
   useGSAP(
     () => {
-      if (!circleRef) return;
+      if (!circleRef.current) return;
 
       gsap.to(circleRef.current, {
         rotation: -radiansToDegrees(rotationAngle),

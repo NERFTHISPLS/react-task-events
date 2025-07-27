@@ -1,4 +1,5 @@
 export const CIRCLE_DIAMETER = 530;
+export const BASE_ANGLE = Math.PI / 3;
 
 export const CHEVRON_SIZE_NORMAL = 20;
 
