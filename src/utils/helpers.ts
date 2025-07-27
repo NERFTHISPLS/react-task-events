@@ -20,7 +20,7 @@ export function findHistoryIntervalIndexByCategory(
 }
 
 export function calcCircleDotCoordinatesByAngle(
-  angle: number,
+  angle: number, // radians
   circleRadius: number,
 ) {
   const center = { x: circleRadius, y: circleRadius };
