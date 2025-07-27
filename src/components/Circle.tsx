@@ -51,16 +51,20 @@ export function Circle() {
     () => {
       if (!circleRef.current) return;
 
+      const angle = radiansToDegrees(rotationAngle);
+      const duration = 0.8;
+      const ease = 'power2.inOut';
+
       gsap.to(circleRef.current, {
-        rotation: -radiansToDegrees(rotationAngle),
-        duration: 0.8,
-        ease: 'power2.inOut',
+        rotation: -angle,
+        duration,
+        ease,
       });
 
       gsap.to('.btn', {
-        rotation: radiansToDegrees(rotationAngle),
-        duration: 0.8,
-        ease: 'power2.inOut',
+        rotation: angle,
+        duration,
+        ease,
       });
     },
     { dependencies: [currentHistoryIntervalIndex] },
