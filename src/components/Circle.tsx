@@ -4,7 +4,11 @@ import {
   calcCircleDotCoordinatesByAngle,
   calcDotsAngles,
   findHistoryIntervalIndexByCategory,
+  radiansToDegrees,
 } from '@/utils/helpers';
+import { useGSAP } from '@gsap/react';
+import gsap from 'gsap';
+import { useRef } from 'react';
 import styled from 'styled-components';
 import { DotButton } from './DotButton';
 
@@ -26,6 +30,8 @@ const StyledCircle = styled.div<CircleProps>`
 `;
 
 export function Circle() {
+  const circleRef = useRef<HTMLDivElement>(null);
+
   const {
     historyIntervals,
     currentHistoryInterval,
@@ -44,8 +50,26 @@ export function Circle() {
   const rotationAngle =
     angles[targetActiveAngleIndex] - angles[currentHistoryIntervalIndex];
 
+  useGSAP(
+    () => {
+      if (!circleRef) return;
+
+      gsap.to(circleRef.current, {
+        rotation: -radiansToDegrees(rotationAngle),
+        duration: 0.8,
+        ease: 'power2.inOut',
+        transformOrigin: 'center center',
+      });
+    },
+    { dependencies: [currentHistoryIntervalIndex] },
+  );
+
   return (
-    <StyledCircle $diameter={CIRCLE_DIAMETER} $rotationAngle={-rotationAngle}>
+    <StyledCircle
+      ref={circleRef}
+      $diameter={CIRCLE_DIAMETER}
+      $rotationAngle={-rotationAngle}
+    >
       {angles.map((angle, i) => (
         <DotButton
           key={angle}

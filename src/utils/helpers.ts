@@ -36,3 +36,7 @@ export function calcDotsAngles(dotsNumber: number) {
 
   return Array.from({ length: dotsNumber }, (_, i) => i * baseAngle);
 }
+
+export function radiansToDegrees(rad: number) {
+  return (rad * 180) / Math.PI;
+}
