@@ -13,6 +13,16 @@ function HistoryIntervalsProvider({ children }: Props) {
     () => historyIntervals[0],
   );
 
+  function setCurrentHistoryIntervalByIndex(index: number) {
+    const target = historyIntervals.find((_, i) => i === index);
+
+    if (!target) {
+      throw new Error("Can't find history interval by index");
+    }
+
+    setCurrentHistoryInterval(target);
+  }
+
   function setNextHistoryInterval(index: number) {
     const nextIndex = index + 1;
     if (nextIndex === historyIntervals.length) return;
@@ -39,6 +49,7 @@ function HistoryIntervalsProvider({ children }: Props) {
       value={{
         historyIntervals,
         currentHistoryInterval,
+        setCurrentHistoryIntervalByIndex,
         setNextHistoryInterval,
         setPrevHistoryInterval,
       }}
