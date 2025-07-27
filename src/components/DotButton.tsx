@@ -24,6 +24,7 @@ export const DotButton = styled.button<DotButtonsProps>`
   outline: none;
   background-color: var(--color-dark-blue);
   border-radius: 50%;
+  transition: all 0.3s ease-out;
 
   &:hover,
   &:active,
@@ -37,9 +38,5 @@ export const DotButton = styled.button<DotButtonsProps>`
       font-size: 2rem;
       transform: rotate(${(props) => `${props.$rotationAngle}rad`});
     }
-  }
-
-  &:hover {
-    transition: all 0.3s ease-out;
   }
 `;
