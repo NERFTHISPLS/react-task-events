@@ -55,7 +55,12 @@ export function Circle() {
         rotation: -radiansToDegrees(rotationAngle),
         duration: 0.8,
         ease: 'power2.inOut',
-        transformOrigin: 'center center',
+      });
+
+      gsap.to('.btn', {
+        rotation: radiansToDegrees(rotationAngle),
+        duration: 0.8,
+        ease: 'power2.inOut',
       });
     },
     { dependencies: [currentHistoryIntervalIndex] },
@@ -70,10 +75,9 @@ export function Circle() {
       {angles.map((angle, i) => (
         <DotButton
           key={angle}
-          className={currentHistoryIntervalIndex === i ? 'active' : ''}
+          className={`btn ${currentHistoryIntervalIndex === i ? 'active' : ''}`}
           $position={calcCircleDotCoordinatesByAngle(angle, radius)}
           $text={(i + 1).toString()}
-          $rotationAngle={rotationAngle}
           onClick={() => setCurrentHistoryIntervalByIndex(i)}
         ></DotButton>
       ))}

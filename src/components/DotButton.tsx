@@ -6,7 +6,6 @@ interface DotButtonsProps {
     y: number;
   };
   $text: string;
-  $rotationAngle: number;
   onClick?: () => void;
 }
 
@@ -24,7 +23,10 @@ export const DotButton = styled.button<DotButtonsProps>`
   outline: none;
   background-color: var(--color-dark-blue);
   border-radius: 50%;
-  transition: all 0.3s ease-out;
+  transition:
+    padding 0.3s ease-out,
+    background-color 0.3s ease-out,
+    border 0.3s ease-out;
 
   &:hover,
   &:active,
@@ -36,7 +38,6 @@ export const DotButton = styled.button<DotButtonsProps>`
     &::before {
       content: '${(props) => props.$text}';
       font-size: 2rem;
-      transform: rotate(${(props) => `${props.$rotationAngle}rad`});
     }
   }
 `;
