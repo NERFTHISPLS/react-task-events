@@ -2,7 +2,7 @@ import { useHistoryIntervalContext } from '@/contexts/history/useHistoryInterval
 import ChevronLeft from '@/ui/ChevronLeft';
 import ChevronRight from '@/ui/ChevronRight';
 import CircleButton from '@/ui/CircleButton';
-import { CHEVRON_SIZE_NORMAL } from '@/utils/constants';
+import { CHEVRON_SIZE_NORMAL, DEVICE } from '@/utils/constants';
 import {
   findHistoryIntervalIndexByCategory,
   formatIntervalNumber,
@@ -10,8 +10,18 @@ import {
 import styled from 'styled-components';
 
 const Container = styled.div`
-  align-self: center;
   padding-left: 8rem;
+
+  @media ${DEVICE.tablet} {
+    align-self: start;
+    padding-bottom: 2rem;
+
+    order: 4;
+  }
+
+  @media ${DEVICE.tabletS} {
+    padding-left: 4rem;
+  }
 `;
 
 const Row = styled.div`

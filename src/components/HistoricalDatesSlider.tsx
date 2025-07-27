@@ -5,12 +5,17 @@ import ChevronRight from '@/ui/ChevronRight';
 import SwiperCircleButton from '@/ui/SwiperCircleButton';
 import {
   BASE_ANIMATION_DURATION_SECONDS,
+  DEVICE,
   SWIPER_ITEMS_PER_VIEW,
+  SWIPER_ITEMS_PER_VIEW_MOBILE,
+  SWIPER_ITEMS_PER_VIEW_TABLET,
   SWIPER_SPACE_BETWEEN_ITEMS,
+  SWIPER_SPACE_BETWEEN_ITEMS_MOBILE,
 } from '@/utils/constants';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { useEffect, useRef, useState } from 'react';
+import { useMediaQuery } from 'react-responsive';
 import styled from 'styled-components';
 import 'swiper/css';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -24,6 +29,11 @@ interface SwiperProps {
 const StyledSwiper = styled(Swiper)<SwiperProps>`
   cursor: ${(props) =>
     props.$events.length > SWIPER_ITEMS_PER_VIEW ? 'grab' : 'auto'};
+
+  @media ${DEVICE.tablet} {
+    padding-top: 1rem;
+    border-top: 1px solid var(--color-dark-blue-10);
+  }
 `;
 
 const Container = styled.div`
@@ -33,6 +43,13 @@ const Container = styled.div`
   gap: 2rem;
   padding-left: 8rem;
   padding-right: 3.5rem;
+
+  @media ${DEVICE.tabletS} {
+    font-size: 1.6rem;
+    flex: 1;
+    padding-left: 4rem;
+    padding-right: 3.5rem;
+  }
 `;
 
 function HistoricalDatesSlider() {
@@ -41,6 +58,8 @@ function HistoricalDatesSlider() {
   const { currentHistoryInterval } = useHistoryIntervalContext();
   const [isBeginning, setIsBeginning] = useState(true);
   const [isEnd, setIsEnd] = useState(false);
+  const isTablet = useMediaQuery({ query: DEVICE.tablet });
+  const isMobile = useMediaQuery({ query: DEVICE.mobileM });
 
   useEffect(() => {
     if (swiperRef.current) {
@@ -94,8 +113,18 @@ function HistoricalDatesSlider() {
           setIsEnd(swiper.isEnd);
         }}
         $events={events}
-        spaceBetween={SWIPER_SPACE_BETWEEN_ITEMS}
-        slidesPerView={SWIPER_ITEMS_PER_VIEW}
+        spaceBetween={
+          isTablet
+            ? SWIPER_SPACE_BETWEEN_ITEMS
+            : SWIPER_SPACE_BETWEEN_ITEMS_MOBILE
+        }
+        slidesPerView={
+          isMobile
+            ? SWIPER_ITEMS_PER_VIEW_MOBILE
+            : isTablet
+              ? SWIPER_ITEMS_PER_VIEW_TABLET
+              : SWIPER_ITEMS_PER_VIEW
+        }
       >
         {events.map((event) => (
           <SwiperSlide key={event.id}>
