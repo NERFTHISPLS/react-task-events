@@ -14,12 +14,14 @@ import {
 } from '@/utils/constants';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
-import { useEffect, useRef, useState } from 'react';
+import { useRef } from 'react';
 import { useMediaQuery } from 'react-responsive';
 import styled from 'styled-components';
 import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import { Navigation, Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Swiper as SwiperType } from 'swiper/types';
 import EventsListItem from './EventsListItem';
 
 interface SwiperProps {
@@ -30,9 +32,25 @@ const StyledSwiper = styled(Swiper)<SwiperProps>`
   cursor: ${(props) =>
     props.$events.length > SWIPER_ITEMS_PER_VIEW ? 'grab' : 'auto'};
 
+  .swiper-pagination {
+    display: none;
+    position: relative;
+    margin-top: 2rem;
+    bottom: auto;
+    top: auto;
+  }
+
+  .swiper-pagination-bullet {
+    background: var(--color-dark-blue);
+  }
+
   @media ${DEVICE.tablet} {
     padding-top: 1rem;
     border-top: 1px solid var(--color-dark-blue-10);
+
+    .swiper-pagination {
+      display: block;
+    }
   }
 `;
 
@@ -54,19 +72,9 @@ const Container = styled.div`
 
 function HistoricalDatesSlider() {
   const containerRef = useRef<HTMLDivElement | null>(null);
-  const swiperRef = useRef<SwiperType | null>(null);
   const { currentHistoryInterval } = useHistoryIntervalContext();
-  const [isBeginning, setIsBeginning] = useState(true);
-  const [isEnd, setIsEnd] = useState(false);
   const isTablet = useMediaQuery({ query: DEVICE.tablet });
   const isMobile = useMediaQuery({ query: DEVICE.mobileM });
-
-  useEffect(() => {
-    if (swiperRef.current) {
-      setIsBeginning(swiperRef.current.isBeginning);
-      setIsEnd(swiperRef.current.isEnd);
-    }
-  }, [currentHistoryInterval]);
 
   useGSAP(
     () => {
@@ -96,28 +104,22 @@ function HistoricalDatesSlider() {
 
   return (
     <Container ref={containerRef}>
-      {!isBeginning && (
-        <SwiperCircleButton onClick={() => swiperRef.current?.slidePrev()}>
-          <ChevronLeft />
-        </SwiperCircleButton>
-      )}
+      <SwiperCircleButton className="btn-prev">
+        <ChevronLeft />
+      </SwiperCircleButton>
 
       <StyledSwiper
-        onSwiper={(swiper) => {
-          swiperRef.current = swiper;
-          setIsBeginning(swiper.isBeginning);
-          setIsEnd(swiper.isEnd);
-        }}
-        onSlideChange={(swiper) => {
-          setIsBeginning(swiper.isBeginning);
-          setIsEnd(swiper.isEnd);
-        }}
+        style={{ width: 'auto' }}
+        modules={[Navigation, Pagination]}
         $events={events}
         spaceBetween={
           isTablet
             ? SWIPER_SPACE_BETWEEN_ITEMS
             : SWIPER_SPACE_BETWEEN_ITEMS_MOBILE
         }
+        pagination={{
+          clickable: true,
+        }}
         slidesPerView={
           isMobile
             ? SWIPER_ITEMS_PER_VIEW_MOBILE
@@ -125,6 +127,10 @@ function HistoricalDatesSlider() {
               ? SWIPER_ITEMS_PER_VIEW_TABLET
               : SWIPER_ITEMS_PER_VIEW
         }
+        navigation={{
+          prevEl: '.btn-prev',
+          nextEl: '.btn-next',
+        }}
       >
         {events.map((event) => (
           <SwiperSlide key={event.id}>
@@ -133,11 +139,9 @@ function HistoricalDatesSlider() {
         ))}
       </StyledSwiper>
 
-      {!isEnd && (
-        <SwiperCircleButton onClick={() => swiperRef.current?.slideNext()}>
-          <ChevronRight />
-        </SwiperCircleButton>
-      )}
+      <SwiperCircleButton className="btn-next">
+        <ChevronRight />
+      </SwiperCircleButton>
     </Container>
   );
 }
